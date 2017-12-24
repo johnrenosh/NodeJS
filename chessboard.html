@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <title>Chess Board</title>
+  <style>
+    table
+    {
+      background-color: white;
+      border-style: solid;
+      border-width: 0.2em;
+      align: center;
+    }
+
+    td
+    {
+      width:6em;
+      height:5em;
+      text-align: center;
+    }
+
+    td.even
+    {
+      background-color: #B9DAFF;
+    }
+
+    td.odd
+    {
+      background-color: #E6ECF7;
+    }
+
+  </style>
+
+  <script>
+    function fillSpots(td,i,j)
+    {
+      if(i==1 || i==8)
+      {
+        //fill white rulers
+        var chess_peice;
+        if(i==1)
+        {
+          chess_peice = chess_black_rulers[j-1]; //since j starts with 1 and array with 0
+        }
+        else
+        {
+          chess_peice = chess_white_rulers[j-1];
+        }
+        td.innerHTML = chess_peice;
+      }
+      else
+      {
+          //pawns
+          if(i==2)
+          {
+            td.innerHTML = chess_black_pawn;
+          }
+          else
+          {
+            td.innerHTML = chess_white_pawn;
+          }
+      }
+    }
+
+    function swapcolor(color)
+    {
+      var nextcolor;
+      if(color == "even")
+      {
+        nextcolor = "odd";
+      }
+      else if (color == "odd")
+      {
+        nextcolor = "even";
+      }
+
+      return nextcolor;
+    }
+  </script>
+
+  <body>
+    <table id="board">
+
+    </table>
+
+    <script>
+      var chess_black_rulers = ["&#9820;","&#9822;","&#9821;","&#9819;","&#9818;","&#9821;","&#9822;","&#9820;"];
+      var chess_black_pawn = "&#9823;";
+
+      var chess_white_rulers = ["&#9814;","&#9816;","&#9815;","&#9813;","&#9812;","&#9815;","&#9816;","&#9814;"];
+      var chess_white_pawn = "&#9817;";
+
+      for(var i=1;i<=8;i++)
+      {
+        var tr = document.createElement('TR');
+        tr.id = "tr"+1;
+
+        var td_class = "odd";
+        if(i%2 === 0)
+        {
+          td_class = "even";
+        }
+
+        for(var j=1;j<=8;j++)
+        {
+          var td = document.createElement('TD');
+          td.className = td_class;
+
+          if(i == 1 || i == 2 || i == 7 || i == 8)
+          {
+            fillSpots(td,i,j);
+          }
+          tr.appendChild(td);
+
+          td_class = swapcolor(td_class);
+        }
+        td_class = "";//reset
+        document.getElementById("board").appendChild(tr);
+      }
+    </script>
+  </body>
+</html>
